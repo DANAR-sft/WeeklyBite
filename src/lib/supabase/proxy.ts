@@ -42,12 +42,7 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
 
   // Halaman yang bisa diakses tanpa login
-  const publicPaths = [
-    "/auth/login",
-    "/auth/register",
-    "/auth/auth-error",
-    "/about",
-  ];
+  const publicPaths = ["/auth/login", "/auth/register", "/about"];
   const isPublicPath =
     request.nextUrl.pathname === "/" ||
     publicPaths.some((path) => request.nextUrl.pathname.startsWith(path));
