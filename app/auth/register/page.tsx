@@ -14,14 +14,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { register } from "../../../actions/auth-action";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
   const { setIsLogin, refreshAuth, getUser } = useAuth();
   const searchParams = useSearchParams();
@@ -152,5 +150,19 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   );
 }

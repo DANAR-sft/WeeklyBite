@@ -16,12 +16,10 @@ import Link from "next/link";
 import { login } from "../../../actions/auth-action";
 import { useAuth } from "../../../src/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-export default function LoginPage() {
+function LoginForm() {
   const { setIsLogin, refreshAuth, getUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -147,5 +145,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
