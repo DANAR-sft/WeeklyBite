@@ -7,10 +7,6 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!email || !password) {
-    redirect("/auth/login?message=Email and password are required");
-  }
-
   await authService.signInWithEmail(email, password);
 }
 
@@ -18,10 +14,6 @@ export async function register(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const name = formData.get("name") as string;
-
-  if (!email || !password) {
-    redirect("/auth/register?message=Email and password are required");
-  }
 
   await authService.signUpNewUser(name, email, password);
 }
