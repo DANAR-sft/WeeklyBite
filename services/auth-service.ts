@@ -18,8 +18,6 @@ export const authService = {
     if (error) {
       redirect("/auth/register?message=" + encodeURIComponent(error.message));
     }
-
-    redirect("/");
   },
 
   async signInWithEmail(email: string, password: string) {
@@ -33,8 +31,6 @@ export const authService = {
     if (error) {
       redirect("/auth/login?message=" + encodeURIComponent(error.message));
     }
-
-    redirect("/");
   },
 
   async signOut() {

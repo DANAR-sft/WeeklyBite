@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, X } from "lucide-react";
 
 export function HoverProfile() {
-  const { setIsLogin, isUser } = useAuth();
+  const { setIsLogin, isUser, setIsUser } = useAuth();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,7 +21,9 @@ export function HoverProfile() {
       const res = await logout();
       if (res?.ok) {
         setIsLogin(false);
+        setIsUser("");
         router.push("/auth/login");
+        router.refresh(); // Force refresh to update UI
       } else {
         console.error("Logout failed", res?.error);
       }

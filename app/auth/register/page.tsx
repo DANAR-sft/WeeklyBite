@@ -16,9 +16,14 @@ import Link from "next/link";
 import { register } from "../../../actions/auth-action";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { flushAllTraces } from "next/dist/trace";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const { setIsLogin, refreshAuth, getUser } = useAuth();
   const searchParams = useSearchParams();
   const message = searchParams?.get("message");
   const [showMessage, setShowMessage] = useState(false);
@@ -29,7 +34,11 @@ export default function RegisterPage() {
     const formData = new FormData(e.currentTarget);
     try {
       await register(formData);
+      await refreshAuth();
+      await getUser();
+      setIsLogin(true);
       setLoading(false);
+      router.push("/");
     } catch (error) {
       setShowMessage(true);
       setLoading(false);

@@ -19,8 +19,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default function LoginPage() {
-  const { setIsLogin } = useAuth();
+  const { setIsLogin, refreshAuth, getUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -34,6 +36,9 @@ export default function LoginPage() {
     try {
       await login(formData);
 
+      // Update auth context immediately
+      await refreshAuth();
+      await getUser();
       setIsLogin(true);
       setLoading(false);
       router.push("/");

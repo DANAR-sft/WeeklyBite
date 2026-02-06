@@ -41,7 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     refreshAuth();
     getUser();
-  }, [refreshAuth, getUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AuthContext.Provider

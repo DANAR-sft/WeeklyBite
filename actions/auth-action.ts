@@ -1,7 +1,6 @@
 "use server";
 
 import { authService, serviceCheckUser } from "../services/auth-service";
-import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
   const email = formData.get("email") as string;
