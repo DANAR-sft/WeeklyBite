@@ -222,6 +222,7 @@ export default function PlanPage() {
                     onChange={(e) => setAllergies([e.target.value])}
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-[#004b23] rounded-md bg-white text-sm sm:text-base text-[#004b23] focus:outline-none focus:border-[#38b000] focus:ring-2 focus:ring-[#70e000]/20 transition-all"
                     placeholder="None"
+                    pattern="[a-zA-Z, ]+$"
                   />
                 </div>
 
@@ -239,6 +240,7 @@ export default function PlanPage() {
                     onChange={(e) => setCuisine([e.target.value])}
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-[#004b23] rounded-md bg-white text-sm sm:text-base text-[#004b23] focus:outline-none focus:border-[#38b000] focus:ring-2 focus:ring-[#70e000]/20 transition-all"
                     placeholder="Indonesian + Western"
+                    pattern="[a-zA-Z, ]+$"
                   />
                 </div>
 
@@ -256,6 +258,7 @@ export default function PlanPage() {
                     onChange={(e) => setDislikes([e.target.value])}
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-[#004b23] rounded-md bg-white text-sm sm:text-base text-[#004b23] focus:outline-none focus:border-[#38b000] focus:ring-2 focus:ring-[#70e000]/20 transition-all"
                     placeholder="e.g. broccoli, mushrooms"
+                    pattern="[a-zA-Z, ]+$"
                   />
                 </div>
 

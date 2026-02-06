@@ -16,10 +16,10 @@ export const authService = {
     });
 
     if (error) {
-      redirect("/auth/auth-error?message=" + encodeURIComponent(error.message));
+      redirect("/auth/register?message=" + encodeURIComponent(error.message));
     }
 
-    redirect("/auth/login?message=Check your email to confirm your account");
+    redirect("/");
   },
 
   async signInWithEmail(email: string, password: string) {
@@ -31,7 +31,7 @@ export const authService = {
     });
 
     if (error) {
-      redirect("/auth/auth-error?message=" + encodeURIComponent(error.message));
+      redirect("/auth/login?message=" + encodeURIComponent(error.message));
     }
 
     redirect("/");

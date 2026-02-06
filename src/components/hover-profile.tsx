@@ -47,24 +47,6 @@ export function HoverProfile() {
       </div>
 
       <div className="mt-2 flex flex-col gap-2">
-        <Link
-          href="/plan/results"
-          className="block w-full text-center px-3 py-2 rounded-md bg-white/8 hover:bg-white/16 transition text-sm"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          My Plans
-        </Link>
-
-        <Link
-          href="/plan/prep"
-          className="block w-full text-center px-3 py-2 rounded-md bg-white/8 hover:bg-white/16 transition text-sm"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          Create Plan
-        </Link>
-
-        <div className="pt-1 border-t border-white/10" />
-
         <button
           onClick={() => {
             handleLogout();
@@ -101,7 +83,6 @@ export function HoverProfile() {
         </HoverCard>
       </div>
 
-      {/* Mobile Menu - Click to toggle */}
       <div className="md:hidden">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -118,15 +99,13 @@ export function HoverProfile() {
           />
         </button>
 
-        {/* Mobile Dropdown Menu - Fixed at bottom with overlay */}
         {mobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <div
               className="fixed inset-0 bg-black/30 z-40"
               onClick={() => setMobileMenuOpen(false)}
             />
-            {/* Menu */}
+
             <div className="fixed bottom-0 left-0 right-0 bg-[#004b23] text-white rounded-t-lg shadow-lg p-4 z-50">
               <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2">
@@ -148,24 +127,6 @@ export function HoverProfile() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Link
-                  href="/plan/results"
-                  className="block w-full px-4 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition text-sm font-medium text-center"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  My Plans
-                </Link>
-
-                <Link
-                  href="/plan/prep"
-                  className="block w-full px-4 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition text-sm font-medium text-center"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Create Plan
-                </Link>
-
-                <div className="my-2 border-t border-white/10" />
-
                 <button
                   onClick={() => {
                     handleLogout();

@@ -14,17 +14,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { register } from "../../../actions/auth-action";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { flushAllTraces } from "next/dist/trace";
 
 export default function RegisterPage() {
-  function handleRegister(e: React.SubmitEvent<HTMLFormElement>) {
+  const searchParams = useSearchParams();
+  const message = searchParams?.get("message");
+  const [showMessage, setShowMessage] = useState(false);
+  const [loading, setLoading] = useState(false);
+  async function handleRegister(e: React.SubmitEvent<HTMLFormElement>) {
+    setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    register(formData);
+    try {
+      await register(formData);
+      setLoading(false);
+    } catch (error) {
+      setShowMessage(true);
+      setLoading(false);
+    }
   }
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-screen grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch min-h-screen">
-        {/* Left visual panel (hidden on mobile) */}
         <div className="hidden md:block w-full h-screen overflow-hidden relative shadow-lg">
           <div
             className="absolute inset-0 bg-cover bg-center h-full w-full"
@@ -40,8 +53,20 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Right form panel */}
-        <div className="flex items-center justify-center h-screen bg-white">
+        <div className="relative flex items-center justify-center h-screen bg-white">
+          {message && showMessage && (
+            <div className="absolute top-4 right-4 bg-red-50 border border-red-200 text-red-800 px-3 py-2 rounded-md shadow-sm flex items-center gap-1">
+              <div className="text-sm leading-tight">{message}</div>
+              <button
+                type="button"
+                aria-label="Close message"
+                onClick={() => setShowMessage(false)}
+                className="p-1 rounded hover:cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+              >
+                <span className="text-red-700 text-base">×</span>
+              </button>
+            </div>
+          )}
           <Card className="w-full text-[#004b23] h-full flex flex-col justify-center rounded-none md:p-50">
             <CardHeader className="md:px-10">
               <CardTitle className="text-3xl text-[#004b23]">
@@ -71,6 +96,7 @@ export default function RegisterPage() {
                       type="text"
                       placeholder="Your name"
                       required
+                      disabled={loading}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -83,6 +109,7 @@ export default function RegisterPage() {
                       type="email"
                       placeholder="m@example.com"
                       required
+                      disabled={loading}
                     />
                   </div>
                   <div className="grid gap-2 mb-5">
@@ -96,6 +123,7 @@ export default function RegisterPage() {
                       name="password"
                       type="password"
                       required
+                      disabled={loading}
                     />
                   </div>
                 </div>
@@ -104,6 +132,8 @@ export default function RegisterPage() {
                 <Button
                   type="submit"
                   className="w-full bg-[#007200] hover:bg-[#70e000] hover:text-[#004b23] h-10"
+                  isLoading={loading}
+                  loadingText="Creating account..."
                 >
                   Create Account
                 </Button>

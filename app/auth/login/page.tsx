@@ -16,20 +16,30 @@ import Link from "next/link";
 import { login } from "../../../actions/auth-action";
 import { useAuth } from "../../../src/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const { setIsLogin } = useAuth();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const message = searchParams?.get("message");
+  const [showMessage, setShowMessage] = useState(false);
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    setLoading(true);
     try {
       await login(formData);
 
       setIsLogin(true);
+      setLoading(false);
       router.push("/");
     } catch (err) {
+      setShowMessage(true);
+      setLoading(false);
       console.error("Login error:", err);
     }
   }
@@ -37,7 +47,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-screen grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch min-h-screen">
-        {/* Left visual panel (hidden on mobile) */}
         <div className="hidden md:block w-full h-screen overflow-hidden relative shadow-lg">
           <div
             className="absolute inset-0 bg-cover bg-center h-full w-full"
@@ -53,8 +62,20 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Right form panel */}
-        <div className="flex items-center justify-center h-screen">
+        <div className="relative flex items-center justify-center h-screen">
+          {message && showMessage && (
+            <div className="absolute top-4 right-4 bg-red-50 border border-red-200 text-red-800 px-3 py-2 rounded-md shadow-sm flex items-center gap-1">
+              <div className="text-sm leading-tight">{message}</div>
+              <button
+                type="button"
+                aria-label="Close message"
+                onClick={() => setShowMessage(false)}
+                className="p-1 rounded hover:cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-red-300"
+              >
+                <span className="text-red-700 text-base">×</span>
+              </button>
+            </div>
+          )}
           <Card className="w-full text-[#004b23] h-full flex flex-col justify-center rounded-none md:p-50">
             <CardHeader className="md:px-10">
               <CardTitle className="text-3xl text-[#004b23]">
@@ -85,6 +106,7 @@ export default function LoginPage() {
                       type="email"
                       placeholder="m@example.com"
                       required
+                      disabled={loading}
                     />
                   </div>
 
@@ -99,6 +121,7 @@ export default function LoginPage() {
                       name="password"
                       type="password"
                       required
+                      disabled={loading}
                     />
                   </div>
                 </div>
@@ -108,6 +131,8 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   className="w-full bg-[#007200] hover:bg-[#70e000] text-white hover:text-[#004b23] font-semibold h-10"
+                  isLoading={loading}
+                  loadingText="Logging in..."
                 >
                   Login
                 </Button>

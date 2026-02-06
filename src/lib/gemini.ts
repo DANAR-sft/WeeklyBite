@@ -106,6 +106,7 @@ Do not include any explanatory text outside the JSON. Use responseMimeType: "app
     config: {
       responseMimeType: "application/json",
       temperature: 0.1,
+      maxOutputTokens: 16384,
     },
   });
 
@@ -114,7 +115,13 @@ Do not include any explanatory text outside the JSON. Use responseMimeType: "app
     const json = JSON.parse(text);
     return json;
   } catch (err) {
-    throw new Error("Gemini returned invalid JSON: " + String(err));
+    console.error("Raw Gemini response:", text);
+    console.error("JSON parse error:", err);
+    throw new Error(
+      "Gemini returned invalid JSON: " +
+        String(err) +
+        ". Check console for raw response.",
+    );
   }
 }
 
@@ -271,6 +278,7 @@ Do not include any explanatory text outside the JSON. Use responseMimeType: "app
     config: {
       responseMimeType: "application/json",
       temperature: 0.2,
+      maxOutputTokens: 16384,
     },
   });
 
@@ -279,7 +287,13 @@ Do not include any explanatory text outside the JSON. Use responseMimeType: "app
     const json = JSON.parse(text);
     return json;
   } catch (err) {
-    throw new Error("Gemini returned invalid JSON: " + String(err));
+    console.error("Raw Gemini response:", text);
+    console.error("JSON parse error:", err);
+    throw new Error(
+      "Gemini returned invalid JSON: " +
+        String(err) +
+        ". Check console for raw response.",
+    );
   }
 }
 

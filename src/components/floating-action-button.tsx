@@ -38,30 +38,20 @@ export default function FloatingActionButton() {
 
   return (
     <>
-      <div className="fixed flex items-end gap-2 bottom-6 right-6 sm:bottom-8 sm:right-8 z-10">
+      <div className="fixed flex flex-row items-end bottom-6 right-6 sm:bottom-8 sm:right-8 z-10">
         {isOpen && (
           <div
             ref={menuRef}
-            className="gap-1 mt-3 mr-0 w-40 bg-transparent text-sm flex flex-col py-2"
+            className="gap-1 mb-5 w-40 bg-transparent text-sm flex flex-col py-2"
           >
             <button
-              className="w-full text-left px-3 py-2 bg-[#004b23] hover:bg-[#70e000] hover:scale-110 transition-transform duration-200 rounded-full shadow-lg"
+              className="w-full text-left px-3 py-2 bg-[#004b23] hover:bg-[#70e000] hover:scale-110 transition-transform duration-200 rounded-full shadow-lg "
               onClick={() => {
                 setIsOpen(false);
                 router.push("/plan/prep");
               }}
             >
               Create Plan
-            </button>
-
-            <button
-              className="w-full text-left px-3 py-2 bg-[#004b23] hover:bg-[#70e000] hover:scale-110 transition-transform duration-200 rounded-full shadow-lg"
-              onClick={() => {
-                setIsOpen(false);
-                router.push("/plan/results");
-              }}
-            >
-              My Plans
             </button>
           </div>
         )}
